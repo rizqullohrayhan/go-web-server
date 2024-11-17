@@ -26,9 +26,18 @@ type User struct  {
 	Member		bool
 }
 
+type GroceryList []string
+
+type Task struct {
+	Name	string
+	Done	bool
+}
+
 var tpl *template.Template
 var prodi produc
 var user User
+var groceryList GroceryList
+var todo []Task
 
 func main() {
 	prodi = produc{
@@ -41,8 +50,9 @@ func main() {
 			Descr: "Over priced shiny thing designed to shatter on impact",
 		},
 	}
-
 	user = User{"Rizqulloh Rayhan", "Indonesia", false}
+	groceryList = GroceryList{"milk", "eggs", "green beans", "cheese", "flour"}
+	todo = []Task{{"give dog a bath", true}, {"mow the lawn", false}, {"pickup groceries", false}}
 
 	tpl, _ = tpl.ParseGlob("view/*.html")
 
@@ -52,6 +62,8 @@ func main() {
 	http.HandleFunc("/login", loginHandleFunc)
 	http.HandleFunc("/productinfo", productInfoHandler)
 	http.HandleFunc("/membership", membershipHandler)
+	http.HandleFunc("/grocery", groceryHandler)
+	http.HandleFunc("/task", taskHandler)
 
 	fmt.Println("listening to 127.0.0.1:8080")
 	http.ListenAndServe(":8080", nil)
@@ -79,4 +91,12 @@ func productInfoHandler(w http.ResponseWriter, r *http.Request)  {
 
 func membershipHandler(w http.ResponseWriter, r *http.Request)  {
 	tpl.ExecuteTemplate(w, "membership.html", user)
+}
+
+func groceryHandler(w http.ResponseWriter, r *http.Request)  {
+	tpl.ExecuteTemplate(w, "grocery.html", groceryList)
+}
+
+func taskHandler(w http.ResponseWriter, r *http.Request)  {
+	tpl.ExecuteTemplate(w, "task.html", todo)
 }
