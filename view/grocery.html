@@ -8,10 +8,15 @@
 <body>
   <!-- <h1>Product: {{.}}</h1> -->
   <h3>Grocery List</h3>
-  <ul>
-    {{range .}}
-      <li>{{.}}</li>
+  <ol>
+    {{range $index, $element := .}}
+      <li>Index: {{$index}} Element: {{$element}} Value:{{.}}</li>
     {{end}}
-  </ul>
+  </ol>
+  <ol>
+    {{range $element := .}}
+      <li>Element: {{$element}} Value:{{.}}</li>
+    {{end}}
+  </ol>
 </body>
 </html>
