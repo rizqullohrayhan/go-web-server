@@ -64,6 +64,7 @@ func main() {
 	http.HandleFunc("/membership", membershipHandler)
 	http.HandleFunc("/grocery", groceryHandler)
 	http.HandleFunc("/task", taskHandler)
+	http.HandleFunc("/indexes", indexesHandler)
 
 	fmt.Println("listening to 127.0.0.1:8080")
 	http.ListenAndServe(":8080", nil)
@@ -99,4 +100,8 @@ func groceryHandler(w http.ResponseWriter, r *http.Request)  {
 
 func taskHandler(w http.ResponseWriter, r *http.Request)  {
 	tpl.ExecuteTemplate(w, "task.html", todo)
+}
+
+func indexesHandler(w http.ResponseWriter, r *http.Request)  {
+	tpl.ExecuteTemplate(w, "indexes.html", groceryList)
 }
